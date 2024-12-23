@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/view_report.css' %}">
+</head>
+<body>
+    <div class="report-container">
+        <h1>Лабораторная работа №{{ report.lab_number }}</h1>
+
+        <div class="section">
+            <div class="section-content">Цель: {{ report.goal }}</div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Задание на лабораторную работу:</div>
+            <div class="section-content">{{ report.task }}</div>
+        </div>
+
+        <div class="section">
+            <h3>Ход выполнения:</h3>
+            <div class="content">
+                {% for content in contents %}
+                    {% if content.content_type == 'text' %}
+                        <p>{{ content.text }}</p>
+                    {% elif content.content_type == 'image' %}
+                        <div>
+                            <img src="{{ content.image.url }}" alt="Изображение">
+                            {% if content.image_caption %}
+                                <div class="image-caption">
+                                    Рисунок {{ forloop.counter }} — {{ content.image_caption }}
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% elif content.content_type == 'code' %}
+                        <div class="code-block">{{ content.code }}</div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-content">Вывод: {{ report.conclusion }}</div>
+        </div>
+
+        <a href="{% url 'download_pdf' report.id %}" class="download-btn">Скачать PDF</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <title>Лабораторная работа №</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            margin: 40px;
+            line-height: 1.8;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 40px;
+            text-transform: uppercase;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            margin-left: 18px;
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+
+        .content {
+            padding-left: 20px;
+            font-size: 16px;
+            text-align: justify;
+        }
+
+        .code-block {
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', Courier, monospace;
+            white-space: pre-wrap;
+            overflow-x: auto;
+            margin-top: 15px;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        .image-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .image-container img {
+            max-width: 80%;
+            max-height: 500px;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+            border: 1px solid #ddd;
+            padding: 5px;
+            background-color: #f8f8f8;
+        }
+
+        .image-caption {
+            text-align: center;
+            font-style: italic;
+            color: #555;
+            margin-top: 8px;
+            font-size: 14px;
+        }
+
+        .footer {
+            text-align: center;
+            font-size: 12px;
+            color: #777;
+            margin-top: 50px;
+            border-top: 1px solid #ddd;
+            padding-top: 10px;
+        }
+
+        .workflow{
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Лабораторная работа №{{ report.lab_number }}</h1>
+
+    <div class="section">
+        <div style="text-indent:25px;", class="content">Цель: {{ report.goal }}</div>
+    </div>
+
+    <div class="section">
+        <div style="text-indent:25px;", class="section-title">Задание на лабораторную работу:</div>
+        <div style="text-indent:25px;", class="content">    {{ report.task }}</div>
+    </div>
+
+    <div class="section">
+        <h3 class="workflow">Ход выполнения работы:</h3>
+        <div style="text-indent:25px;", class="content">
+            {% for content in contents %}
+                {% if content.content_type == 'text' %}
+                    <p>{{ content.text }}</p>
+                {% elif content.content_type == 'image' %}
+                    <div class="image-container">
+                        <img src="{{ content.image_url }}" alt="Изображение">
+                        {% if content.image_caption %}
+                            <div class="image-caption" style="align">
+                                Рисунок {{ forloop.counter }} — {{ content.image_caption }}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% elif content.content_type == 'code' %}
+                    <div style="text-indent:25px;", class="section-title">Листинг:</div>
+                    <div class="code-block">{{ content.code }}</div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="section">
+        <div style="text-indent:25px;", class="content">Вывод: {{ report.conclusion }}</div>
+    </div>
+</body>
+</html>

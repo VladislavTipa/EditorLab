@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <title>EditorLab</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
+</head>
+<body>
+    <div class="top-bar">
+        <div class="logo">EditorLab</div>
+        <div class="menu">
+            <a href="#">О сайте</a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <h1>Добро пожаловать в редактор отчетов</h1>
+        <a href="{% url 'create_report' %}" class="create-button">Создать новый отчет</a>
+    </div>
+
+    <div class="bottom-bar">
+        <p>© 2024 EditorLab</p>
+    </div>
+</body>
+</html>

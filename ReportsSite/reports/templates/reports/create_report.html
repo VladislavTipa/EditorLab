@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% load static %}
+    <title>Создание отчета</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/create_report.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h1>Создать отчет</h1>
+        <form method="post" enctype="multipart/form-data" id="report-form">
+            {% csrf_token %}
+            {{ report_form.as_p }}
+
+            <h3>Ход выполнения:</h3>
+            <div id="sections-container">
+            </div>
+
+            <input type="hidden" name="sections_order" id="sections-order">
+
+            <button type="button" id="add-text">Добавить текст</button>
+            <button type="button" id="add-image">Добавить изображение</button>
+            <button type="button" id="add-code">Добавить блок кода</button>
+
+            {{ conclusion_form.as_p }}
+
+            <button type="submit">Сохранить отчет</button>
+        </form>
+    </div>
+
+    <script src="{% static 'js/create_report.js' %}"></script>
+</body>
+</html>
